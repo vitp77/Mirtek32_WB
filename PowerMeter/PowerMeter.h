@@ -66,11 +66,37 @@ struct DeviceData { // 42
   uint16_t serialNumber11 = 0x0000;
   uint16_t serialNumber12 = 0x0000;
 
-  uint16_t lastError = 0x0000;
+  uint16_t Error = 0x0000;
+    // 0 - нет ошибок
+    // 1 - не задан сетевой адерс
+    // 2 - ошибка соединения
 
   uint16_t secondsWorkh = 0x0000;
   uint16_t secondsWorkl = 0x0000;
 
-  uint16_t vcc = 0x0000;
+  uint16_t secondsUntilIterationh = 0x0000;
+  uint16_t secondsUntilIterationl = 0x0000;
 
+  uint16_t vcc = 0x0000;
+  uint16_t uptime = 0x0000;
+
+  uint16_t dateTime0 = 0x0000;
+  uint16_t dateTime1 = 0x0000;
+  uint16_t dateTime2 = 0x0000;
+  uint16_t dateTime3 = 0x0000;
+  uint16_t dateTime4 = 0x0000;
+  uint16_t dateTime5 = 0x0000;
+  uint16_t dateTime6 = 0x0000;
+  uint16_t dateTime7 = 0x0000;
+  uint16_t dateTime8 = 0x0000;
+  uint16_t dateTime9 = 0x0000;
+  uint16_t dateTime10 = 0x0000;
+  uint16_t dateTime11 = 0x0000;
+  uint16_t dateTime12 = 0x0000;
+  uint16_t dateTime13 = 0x0000;
+  uint16_t dateTime14 = 0x0000;
+  uint16_t dateTime15 = 0x0000;
+  uint16_t dateTime16 = 0x0000;
+  uint16_t dateTime17 = 0x0000;
+  uint16_t dateTime18 = 0x0000;
 };

@@ -165,6 +165,15 @@ void beginModbusSlave() {
   mb.slave(holdingData.modbusAddr);
 }
 
+void checkPowerMeterAddress(DeviceData *deviceData)
+{
+  if(deviceData->holdingData.powerMeterAddress) {
+    deviceData->Error = 1;
+  }
+  else {
+    deviceData->Error = 0;
+  }
+}
 void powerMeterSetup(DeviceData *deviceData)
 {
   readBaudRate(deviceData);
@@ -240,7 +249,7 @@ void powerMeterSetup(DeviceData *deviceData)
   mb.addIreg(0x0044, deviceData->energyT3l);
 
   mb.addIreg(0x0045, deviceData->c);
-  mb.addIreg(0x0046, deviceData->lastError);
+  mb.addIreg(0x0046, deviceData->Error);
 
   mb.addHreg(0x0047, deviceData->holdingData.powerMeterAddress);
   mb.addHreg(0x0048, deviceData->holdingData.pollingSettings.pollingPeriod);
@@ -258,11 +267,37 @@ void powerMeterSetup(DeviceData *deviceData)
   mb.addHreg(0x0070, holdingData.stopBits);
 
   mb.addIreg(0x0079, deviceData->vcc);
-  mb.addIreg(0x007c, 0);
+  mb.addIreg(0x007c, deviceData->uptime);
   mb.addHreg(0x0080, deviceData->holdingData.modbusAddr);
 
+  mb.addIreg(0x0090, deviceData->dateTime0);
+  mb.addIreg(0x0091, deviceData->dateTime1);
+  mb.addIreg(0x0092, deviceData->dateTime2);
+  mb.addIreg(0x0093, deviceData->dateTime3);
+  mb.addIreg(0x0094, deviceData->dateTime4);
+  mb.addIreg(0x0095, deviceData->dateTime5);
+  mb.addIreg(0x0096, deviceData->dateTime6);
+  mb.addIreg(0x0097, deviceData->dateTime7);
+  mb.addIreg(0x0098, deviceData->dateTime8);
+  mb.addIreg(0x0099, deviceData->dateTime9);
+  mb.addIreg(0x009a, deviceData->dateTime10);
+  mb.addIreg(0x009b, deviceData->dateTime11);
+  mb.addIreg(0x009c, deviceData->dateTime12);
+  mb.addIreg(0x009d, deviceData->dateTime13);
+  mb.addIreg(0x009e, deviceData->dateTime14);
+  mb.addIreg(0x009f, deviceData->dateTime15);
+  mb.addIreg(0x00a0, deviceData->dateTime16);
+  mb.addIreg(0x00a1, deviceData->dateTime17);
+  mb.addIreg(0x00a2, deviceData->dateTime18);
+  
+  mb.addIreg(0x00a3, deviceData->secondsUntilIterationh);
+  mb.addIreg(0x00a4, deviceData->secondsUntilIterationl);
+
+  checkPowerMeterAddress(deviceData);
 }
 
+// dd.MM.yyyy hh:mm:ss
+// - 19 символов
 void powerMeterLoop(DeviceData *deviceData)
 {
   // Расчет периода работы в секундах
@@ -314,7 +349,7 @@ void powerMeterLoop(DeviceData *deviceData)
   mb.Ireg(0x0044, deviceData->energyT3l);
 
   mb.Ireg(0x0045, deviceData->c);
-  mb.Ireg(0x0046, deviceData->lastError);
+  mb.Ireg(0x0046, deviceData->Error);
 
   deviceData->holdingData.powerMeterAddress                   = mb.Hreg(0x0047);
   deviceData->holdingData.pollingSettings.pollingPeriod       = mb.Hreg(0x0048);
@@ -372,7 +407,6 @@ void powerMeterLoop(DeviceData *deviceData)
 
   deviceData->holdingData.modbusAddr = mb.Hreg(0x0080);
 
-  //  deviceData->powerMeterAddress = 26648;
   //  deviceData->pollingPeriod = 300;
   //  deviceData->onceADay = 0;
   //  deviceData->baudRate = 1152;
@@ -397,6 +431,7 @@ void powerMeterLoop(DeviceData *deviceData)
   }
   if (deviceData->holdingData.powerMeterAddress != holdingData.powerMeterAddress) {
     storePowerMeterAddr(deviceData);
+    checkPowerMeterAddress(deviceData);
   }
   if (deviceData->holdingData.pollingSettings.pollingPeriod != holdingData.pollingSettings.pollingPeriod) {
     storePollingPeriod(deviceData);

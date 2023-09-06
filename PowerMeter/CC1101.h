@@ -196,16 +196,35 @@ void ParcePacket(DeviceData *deviceData) {
       deviceData->hours   = resultbuffer[15];
       deviceData->minutes = resultbuffer[14];
       deviceData->seconds = resultbuffer[13];
-      timeSt = uint64_t(deviceData->year + 2000)      * 10000000000;
-      timeSt = timeSt + uint64_t(deviceData->month)   * 100000000;
-      timeSt = timeSt + uint64_t(deviceData->day)     * 1000000;
-      timeSt = timeSt + uint64_t(deviceData->hours)   * 10000;
-      timeSt = timeSt + uint64_t(deviceData->minutes) * 100;
-      timeSt = timeSt + uint64_t(deviceData->seconds);
-      deviceData->year = timeSt >> 48;
-      deviceData->month = timeSt >> 32;
-      deviceData->day = timeSt >> 16;
-      deviceData->hours = timeSt;
+      deviceData->dateTime0 = '2';
+      deviceData->dateTime1 = '0';
+      deviceData->dateTime2 = resultbuffer[19] / 10 + 32;
+      deviceData->dateTime3 = resultbuffer[19] - (deviceData->dateTime2 - 32) * 10 + 32;
+      deviceData->dateTime4 = '-';
+      deviceData->dateTime5 = resultbuffer[18] / 10 + 32;
+      deviceData->dateTime6 = resultbuffer[18] - (deviceData->dateTime5 - 32) * 10 + 32;
+      deviceData->dateTime7 = '-';
+      deviceData->dateTime8 = resultbuffer[17] / 10 + 32;
+      deviceData->dateTime9 = resultbuffer[17] - (deviceData->dateTime8 - 32) * 10 + 32;
+      deviceData->dateTime10 = ' ';
+      deviceData->dateTime11 = resultbuffer[15] / 10 + 32;
+      deviceData->dateTime12 = resultbuffer[15] - (deviceData->dateTime11 - 32) * 10 + 32;
+      deviceData->dateTime13 = ':';
+      deviceData->dateTime14 = resultbuffer[14] / 10 + 32;
+      deviceData->dateTime15 = resultbuffer[14] - (deviceData->dateTime14 - 32) * 10 + 32;
+      deviceData->dateTime16 = ':';
+      deviceData->dateTime17 = resultbuffer[13] / 10 + 32;
+      deviceData->dateTime18 = resultbuffer[13] - (deviceData->dateTime17 - 32) * 10 + 32;
+//      timeSt = uint64_t(deviceData->year + 2000)      * 10000000000;
+//      timeSt = timeSt + uint64_t(deviceData->month)   * 100000000;
+//      timeSt = timeSt + uint64_t(deviceData->day)     * 1000000;
+//      timeSt = timeSt + uint64_t(deviceData->hours)   * 10000;
+//      timeSt = timeSt + uint64_t(deviceData->minutes) * 100;
+//      timeSt = timeSt + uint64_t(deviceData->seconds);
+//      deviceData->year = timeSt >> 48;
+//      deviceData->month = timeSt >> 32;
+//      deviceData->day = timeSt >> 16;
+//      deviceData->hours = timeSt;
 #ifdef ShowGettingIformation
       SerialPrint2Dec(deviceData->day);
       Serial.print(F("."));
@@ -422,16 +441,17 @@ void poolingLoop(DeviceData *deviceData) {
     }
     if (indexPacket > 3) {
       setTimerToNextPolling(deviceData);
+      deviceData->Error = 0;
     } else {
       if (iteration < 10) {
         sendPacket(pgm_read_byte(numberPackets + indexPacket), deviceData);
         // Для приема пакета обычно хватает секунды, если не хватило увеличивается время
-        tmr.setTime(1000 + (100 * (iteration - 1)));
+        tmr.setTime(1000 + (100 * iteration));
       } else {
         // Если ответа получить не удается - делается минутная пауза
         tmr.setTime(60000);
         pollingStarted = false;
-        deviceData->lastError = 201;
+        deviceData->Error = 2;
       }
     }
     tmr.start();
@@ -468,6 +488,7 @@ void cc1101Setup(DeviceData * deviceData) {
   }
   else {
     Serial.println(F("Connection Error"));
+    deviceData->Error = 3;
   }
 
   //Инициализируем cc1101
@@ -486,6 +507,15 @@ void cc1101Setup(DeviceData * deviceData) {
 }
 
 void cc1101Loop(DeviceData *deviceData) {
+  if (deviceData->holdingData.powerMeterAddress == 0) {
+    return;
+  }
+  
+  uint32_t secondsUntilIteration = tmr.timeLeft() / 1000;
+  
+  deviceData->secondsUntilIterationh = uint16_t((secondsUntilIteration & 0xffff0000) >> 16);
+  deviceData->secondsUntilIterationl = uint16_t(secondsUntilIteration & 0x0000ffff);
+  
   poolingLoop(deviceData);
   receiveLoop(deviceData);
 }
