@@ -332,6 +332,29 @@ void powerMeterLoop(DeviceData *deviceData)
   mb.Ireg(0x0035, deviceData->serialNumber11);
   mb.Ireg(0x0036, deviceData->serialNumber12);
 
+  mb.Ireg(0x0090, deviceData->dateTime0);
+  mb.Ireg(0x0091, deviceData->dateTime1);
+  mb.Ireg(0x0092, deviceData->dateTime2);
+  mb.Ireg(0x0093, deviceData->dateTime3);
+  mb.Ireg(0x0094, deviceData->dateTime4);
+  mb.Ireg(0x0095, deviceData->dateTime5);
+  mb.Ireg(0x0096, deviceData->dateTime6);
+  mb.Ireg(0x0097, deviceData->dateTime7);
+  mb.Ireg(0x0098, deviceData->dateTime8);
+  mb.Ireg(0x0099, deviceData->dateTime9);
+  mb.Ireg(0x009a, deviceData->dateTime10);
+  mb.Ireg(0x009b, deviceData->dateTime11);
+  mb.Ireg(0x009c, deviceData->dateTime12);
+  mb.Ireg(0x009d, deviceData->dateTime13);
+  mb.Ireg(0x009e, deviceData->dateTime14);
+  mb.Ireg(0x009f, deviceData->dateTime15);
+  mb.Ireg(0x00a0, deviceData->dateTime16);
+  mb.Ireg(0x00a1, deviceData->dateTime17);
+  mb.Ireg(0x00a2, deviceData->dateTime18);
+
+  mb.Ireg(0x00a3, deviceData->secondsUntilIterationh);
+  mb.Ireg(0x00a4, deviceData->secondsUntilIterationl);
+
   mb.Ireg(0x0037, deviceData->year);
   mb.Ireg(0x0038, deviceData->month);
   mb.Ireg(0x0039, deviceData->day);
