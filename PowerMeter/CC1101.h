@@ -1,6 +1,6 @@
 //#define ShowReceivedPacked
 //#define ShowResultedPacked
-#define ShowGettingIformation
+//#define ShowGettingIformation
 
 #include <ELECHOUSE_CC1101_SRC_DRV.h>
 #include "CRC8.h"
@@ -198,23 +198,23 @@ void ParcePacket(DeviceData *deviceData) {
       deviceData->seconds = resultbuffer[13];
       deviceData->dateTime0 = '2';
       deviceData->dateTime1 = '0';
-      deviceData->dateTime2 = resultbuffer[19] / 10 + 32;
-      deviceData->dateTime3 = resultbuffer[19] - (deviceData->dateTime2 - 32) * 10 + 32;
+      deviceData->dateTime2 = resultbuffer[19] / 10 + 48;
+      deviceData->dateTime3 = resultbuffer[19] - (deviceData->dateTime2 - 48) * 10 + 48;
       deviceData->dateTime4 = '-';
-      deviceData->dateTime5 = resultbuffer[18] / 10 + 32;
-      deviceData->dateTime6 = resultbuffer[18] - (deviceData->dateTime5 - 32) * 10 + 32;
+      deviceData->dateTime5 = resultbuffer[18] / 10 + 48;
+      deviceData->dateTime6 = resultbuffer[18] - (deviceData->dateTime5 - 48) * 10 + 48;
       deviceData->dateTime7 = '-';
-      deviceData->dateTime8 = resultbuffer[17] / 10 + 32;
-      deviceData->dateTime9 = resultbuffer[17] - (deviceData->dateTime8 - 32) * 10 + 32;
+      deviceData->dateTime8 = resultbuffer[17] / 10 + 48;
+      deviceData->dateTime9 = resultbuffer[17] - (deviceData->dateTime8 - 48) * 10 + 48;
       deviceData->dateTime10 = ' ';
-      deviceData->dateTime11 = resultbuffer[15] / 10 + 32;
-      deviceData->dateTime12 = resultbuffer[15] - (deviceData->dateTime11 - 32) * 10 + 32;
+      deviceData->dateTime11 = resultbuffer[15] / 10 + 48;
+      deviceData->dateTime12 = resultbuffer[15] - (deviceData->dateTime11 - 48) * 10 + 48;
       deviceData->dateTime13 = ':';
-      deviceData->dateTime14 = resultbuffer[14] / 10 + 32;
-      deviceData->dateTime15 = resultbuffer[14] - (deviceData->dateTime14 - 32) * 10 + 32;
+      deviceData->dateTime14 = resultbuffer[14] / 10 + 48;
+      deviceData->dateTime15 = resultbuffer[14] - (deviceData->dateTime14 - 48) * 10 + 48;
       deviceData->dateTime16 = ':';
-      deviceData->dateTime17 = resultbuffer[13] / 10 + 32;
-      deviceData->dateTime18 = resultbuffer[13] - (deviceData->dateTime17 - 32) * 10 + 32;
+      deviceData->dateTime17 = resultbuffer[13] / 10 + 48;
+      deviceData->dateTime18 = resultbuffer[13] - (deviceData->dateTime17 - 48) * 10 + 48;
 //      timeSt = uint64_t(deviceData->year + 2000)      * 10000000000;
 //      timeSt = timeSt + uint64_t(deviceData->month)   * 100000000;
 //      timeSt = timeSt + uint64_t(deviceData->day)     * 1000000;
