@@ -160,7 +160,8 @@
                 "format": "s32",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total"
+                "group": "channel1_total",
+				"order": 2
             },
             {
                 "name": "AP T1",
@@ -170,7 +171,8 @@
                 "format": "s32",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total"
+                "group": "channel1_total",
+				"order": 3
             },
             {
                 "name": "AP T2",
@@ -180,7 +182,8 @@
                 "format": "s32",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total"
+                "group": "channel1_total",
+				"order": 4
             },
             {
                 "name": "AP T3",
@@ -190,7 +193,8 @@
                 "format": "s16",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total"
+                "group": "channel1_total",
+				"order": 5
             },
             {
                 "name": "U1",
@@ -242,7 +246,8 @@
                 "type": "text",
 				"format": "string",
 				"string_data_size": 13,
-                "group": "hw_info"
+                "group": "hw_info",
+				"order": 1
             },
             {
                 "name": "Uptime",
@@ -276,8 +281,8 @@
                 "name": "Seconds until iteration",
                 "reg_type": "input",
                 "address": "0xa3",
-                "type": "value",
-                "format": "u16",
+                "type": "text",
+                "format": "u32",
                 "enabled": false,
                 "group": "debug"
             },
