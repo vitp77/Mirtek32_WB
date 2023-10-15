@@ -5,11 +5,6 @@
     "device": {
         "name": "Миртек 32",
         "id": "Mirtek32",
-        "max_read_registers": 60,
-        "response_timeout_ms": 1,
-        "frame_timeout_ms": 15,
-        "enable_wb_continuous_read": true,
-
         "groups": [
             {
                 "title": "L1",
@@ -28,7 +23,7 @@
             },
             {
                 "title": "Total",
-				"id": "channel1_total",
+                "id": "total",
                 "order": 4
             },
             {
@@ -47,7 +42,6 @@
                 "order": 21
             }
         ],
-
         "parameters": {
             "baud_rate": {
                 "title": "Baud rate",
@@ -120,7 +114,6 @@
                 "order": 5
             }
         },
-
         "channels": [
             {
                 "name": "I1",
@@ -155,46 +148,42 @@
             {
                 "name": "Total AP",
                 "reg_type": "input",
-                "address": "0x3d",
+                "address": "0x3e",
                 "type": "power_consumption",
                 "format": "s32",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total",
-				"order": 2
+                "group": "total"
             },
             {
                 "name": "AP T1",
                 "reg_type": "input",
-                "address": "0x3f",
+                "address": "0x40",
                 "type": "power_consumption",
                 "format": "s32",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total",
-				"order": 3
+                "group": "total"
             },
             {
                 "name": "AP T2",
                 "reg_type": "input",
-                "address": "0x41",
+                "address": "0x42",
                 "type": "power_consumption",
                 "format": "s32",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total",
-				"order": 4
+                "group": "total"
             },
             {
                 "name": "AP T3",
                 "reg_type": "input",
-                "address": "0x43",
+                "address": "0x44",
                 "type": "power_consumption",
                 "format": "s16",
                 "scale": 0.01,
                 "round_to": 0.01,
-                "group": "channel1_total",
-				"order": 5
+                "group": "total"
             },
             {
                 "name": "U1",
@@ -244,10 +233,9 @@
                 "reg_type": "input",
                 "address": "0x2a",
                 "type": "text",
-				"format": "string",
-				"string_data_size": 13,
-                "group": "hw_info",
-				"order": 1
+                "format": "string",
+                "string_data_size": 13,
+                "group": "hw_info"
             },
             {
                 "name": "Uptime",
@@ -261,7 +249,7 @@
             {
                 "name": "MCU Temperature",
                 "reg_type": "input",
-                "address": 124,
+                "address": "0x7c",
                 "type": "temperature",
                 "format": "s16",
                 "scale": 0.1,
@@ -280,7 +268,7 @@
             {
                 "name": "Seconds until iteration",
                 "reg_type": "input",
-                "address": "0xa3",
+                "address": "0x60",
                 "type": "text",
                 "format": "u32",
                 "enabled": false,
@@ -289,7 +277,7 @@
             {
                 "name": "Error",
                 "reg_type": "input",
-                "address": "0x46",
+                "address": "0x47",
                 "type": "value",
                 "format": "u16",
                 "enabled": false,
@@ -298,24 +286,15 @@
             {
                 "name": "Date time",
                 "reg_type": "input",
-                "address": "0x90",
+                "address": "0x4c",
                 "type": "text",
                 "format": "string",
-				"string_data_size": 19,
+                "string_data_size": 19,
                 "enabled": false,
                 "group": "debug"
             },
             {
                 "name": "Year",
-                "reg_type": "input",
-                "address": "0x37",
-                "type": "value",
-                "format": "u16",
-                "enabled": false,
-                "group": "debug"
-            },
-            {
-                "name": "Month",
                 "reg_type": "input",
                 "address": "0x38",
                 "type": "value",
@@ -324,7 +303,7 @@
                 "group": "debug"
             },
             {
-                "name": "Day",
+                "name": "Month",
                 "reg_type": "input",
                 "address": "0x39",
                 "type": "value",
@@ -333,7 +312,7 @@
                 "group": "debug"
             },
             {
-                "name": "Hour",
+                "name": "Day",
                 "reg_type": "input",
                 "address": "0x3a",
                 "type": "value",
@@ -342,7 +321,7 @@
                 "group": "debug"
             },
             {
-                "name": "Minutes",
+                "name": "Hour",
                 "reg_type": "input",
                 "address": "0x3b",
                 "type": "value",
@@ -351,9 +330,18 @@
                 "group": "debug"
             },
             {
-                "name": "Seconds",
+                "name": "Minutes",
                 "reg_type": "input",
                 "address": "0x3c",
+                "type": "value",
+                "format": "u16",
+                "enabled": false,
+                "group": "debug"
+            },
+            {
+                "name": "Seconds",
+                "reg_type": "input",
+                "address": "0x3d",
                 "type": "value",
                 "format": "u16",
                 "enabled": false,
@@ -376,26 +364,25 @@
                 "Uptime": "Время работы с момента включения (с)",
                 "MCU Temperature": "Температура МК",
                 "MCU Voltage": "Напряжение питания МК",
-				"adress_of_power_meter_description": "Сетевой адрес счетчика",
-				"hour_polling_a_day_description": "Час опроса (0-23)",
-				"minutes_polling_a_day_description": "Минуты опроса (0-59)",
-				"polling_period_description": "Периодичночть опроса счетчика (секунды)",
-				"once_a_day_description": "Опрашивать раз в сутки",
+                "adress_of_power_meter_description": "Сетевой адрес счетчика",
+                "hour_polling_a_day_description": "Час опроса (0-23)",
+                "minutes_polling_a_day_description": "Минуты опроса (0-59)",
+                "polling_period_description": "Периодичночть опроса счетчика (секунды)",
+                "once_a_day_description": "Опрашивать раз в сутки",
                 "Debug": "Диагностика",
-				"Error": "Код ошибки",
-				"Total AP": "Показания (общие)",
-				"AP T1": "Показания Т1",
-				"AP T2": "Показания Т2",
-				"AP T3": "Показания Т3",
-				"Seconds until iteration": "Время до сл. чтения (с)",
-				"Date time": "Показания получены",
-				"Year": "Год",
-				"Month": "Месяц",
-				"Day": "День",
-				"Hour": "Часы",
-				"Minutes": "Минуты",
-				"Seconds": "Секунды"
-				
+                "Error": "Код ошибки",
+                "Total AP": "Показания (общие)",
+                "AP T1": "Показания Т1",
+                "AP T2": "Показания Т2",
+                "AP T3": "Показания Т3",
+                "Seconds until iteration": "Время до сл. чтения (с)",
+                "Date time": "Показания получены",
+                "Year": "Год",
+                "Month": "Месяц",
+                "Day": "День",
+                "Hour": "Часы",
+                "Minutes": "Минуты",
+                "Seconds": "Секунды"
             }
         }
     }
