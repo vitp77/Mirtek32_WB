@@ -215,16 +215,6 @@ void ParcePacket(DeviceData *deviceData) {
       deviceData->dateTime16 = ':';
       deviceData->dateTime17 = resultbuffer[13] / 10 + 48;
       deviceData->dateTime18 = resultbuffer[13] - (deviceData->dateTime17 - 48) * 10 + 48;
-//      timeSt = uint64_t(deviceData->year + 2000)      * 10000000000;
-//      timeSt = timeSt + uint64_t(deviceData->month)   * 100000000;
-//      timeSt = timeSt + uint64_t(deviceData->day)     * 1000000;
-//      timeSt = timeSt + uint64_t(deviceData->hours)   * 10000;
-//      timeSt = timeSt + uint64_t(deviceData->minutes) * 100;
-//      timeSt = timeSt + uint64_t(deviceData->seconds);
-//      deviceData->year = timeSt >> 48;
-//      deviceData->month = timeSt >> 32;
-//      deviceData->day = timeSt >> 16;
-//      deviceData->hours = timeSt;
 #ifdef ShowGettingIformation
       SerialPrint2Dec(deviceData->day);
       Serial.print(F("."));
@@ -364,7 +354,7 @@ void setTimerToNextPolling(DeviceData *deviceData) {
 
 void sendPacket(uint8_t packetIndex, DeviceData *deviceData) {
   digitalWrite(LED_BUILTIN, HIGH);
-  Serial.println(packetIndex);
+  // Serial.println(packetIndex);
   // Подготовка авкета
   switch (packetIndex) {
     case 0x1c:
@@ -446,10 +436,10 @@ void poolingLoop(DeviceData *deviceData) {
       if (iteration < 10) {
         sendPacket(pgm_read_byte(numberPackets + indexPacket), deviceData);
         // Для приема пакета обычно хватает секунды, если не хватило увеличивается время
-        tmr.setTime(1000 + (100 * iteration));
+        tmr.setTime(2000 + (1000 * iteration));
       } else {
         // Если ответа получить не удается - делается минутная пауза
-        tmr.setTime(60000);
+        tmr.setTime(180000);
         pollingStarted = false;
         deviceData->Error = 2;
       }

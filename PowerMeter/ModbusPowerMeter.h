@@ -174,6 +174,7 @@ void checkPowerMeterAddress(DeviceData *deviceData)
     deviceData->Error = 0;
   }
 }
+
 void powerMeterSetup(DeviceData *deviceData)
 {
   readBaudRate(deviceData);
@@ -207,6 +208,8 @@ void powerMeterSetup(DeviceData *deviceData)
   Serial.print(F("minutesPollingADay:"));
   Serial.println(deviceData->holdingData.pollingSettings.minutesPollingADay);
 
+// input регистры
+
   mb.addIreg(0x0020, deviceData->u1);
   mb.addIreg(0x0021, deviceData->i1h);
   mb.addIreg(0x0022, deviceData->i1l);
@@ -231,25 +234,90 @@ void powerMeterSetup(DeviceData *deviceData)
   mb.addIreg(0x0034, deviceData->serialNumber10);
   mb.addIreg(0x0035, deviceData->serialNumber11);
   mb.addIreg(0x0036, deviceData->serialNumber12);
+  mb.addIreg(0x0037, 0);
 
-  mb.addIreg(0x0037, deviceData->year);
-  mb.addIreg(0x0038, deviceData->month);
-  mb.addIreg(0x0039, deviceData->day);
-  mb.addIreg(0x003a, deviceData->hours);
-  mb.addIreg(0x003b, deviceData->minutes);
-  mb.addIreg(0x003c, deviceData->seconds);
+  mb.addIreg(0x0038, deviceData->year);
+  mb.addIreg(0x0039, deviceData->month);
+  mb.addIreg(0x003a, deviceData->day);
+  mb.addIreg(0x003b, deviceData->hours);
+  mb.addIreg(0x003c, deviceData->minutes);
+  mb.addIreg(0x003d, deviceData->seconds);
 
-  mb.addIreg(0x003d, deviceData->energyh);
-  mb.addIreg(0x003e, deviceData->energyl);
-  mb.addIreg(0x003f, deviceData->energyT1h);
-  mb.addIreg(0x0040, deviceData->energyT1l);
-  mb.addIreg(0x0041, deviceData->energyT2h);
-  mb.addIreg(0x0042, deviceData->energyT2l);
-  mb.addIreg(0x0043, deviceData->energyT3h);
-  mb.addIreg(0x0044, deviceData->energyT3l);
+  mb.addIreg(0x003e, deviceData->energyh);
+  mb.addIreg(0x003f, deviceData->energyl);
+  mb.addIreg(0x0040, deviceData->energyT1h);
+  mb.addIreg(0x0041, deviceData->energyT1l);
+  mb.addIreg(0x0042, deviceData->energyT2h);
+  mb.addIreg(0x0043, deviceData->energyT2l);
+  mb.addIreg(0x0044, deviceData->energyT3h);
+  mb.addIreg(0x0045, deviceData->energyT3l);
 
-  mb.addIreg(0x0045, deviceData->c);
-  mb.addIreg(0x0046, deviceData->Error);
+  mb.addIreg(0x0046, deviceData->c);
+  mb.addIreg(0x0047, deviceData->Error);
+  
+  mb.addIreg(0x0048, 0);
+  mb.addIreg(0x0049, 0);
+  mb.addIreg(0x004a, 0);
+  mb.addIreg(0x004b, 0);
+
+  mb.addIreg(0x004c, deviceData->dateTime0);
+  mb.addIreg(0x004d, deviceData->dateTime1);
+  mb.addIreg(0x004e, deviceData->dateTime2);
+  mb.addIreg(0x004f, deviceData->dateTime3);
+  mb.addIreg(0x0050, deviceData->dateTime4);
+  mb.addIreg(0x0051, deviceData->dateTime5);
+  mb.addIreg(0x0052, deviceData->dateTime6);
+  mb.addIreg(0x0053, deviceData->dateTime7);
+  mb.addIreg(0x0054, deviceData->dateTime8);
+  mb.addIreg(0x0055, deviceData->dateTime9);
+  mb.addIreg(0x0056, deviceData->dateTime10);
+  mb.addIreg(0x0057, deviceData->dateTime11);
+  mb.addIreg(0x0058, deviceData->dateTime12);
+  mb.addIreg(0x0059, deviceData->dateTime13);
+  mb.addIreg(0x005a, deviceData->dateTime14);
+  mb.addIreg(0x005b, deviceData->dateTime15);
+  mb.addIreg(0x005c, deviceData->dateTime16);
+  mb.addIreg(0x005d, deviceData->dateTime17);
+  mb.addIreg(0x005e, deviceData->dateTime18);
+  mb.addIreg(0x005f, 0);
+  
+  mb.addIreg(0x0060, deviceData->secondsUntilIterationh);
+  mb.addIreg(0x0061, deviceData->secondsUntilIterationl);
+  
+  mb.addIreg(0x0062, 0);
+  mb.addIreg(0x0063, 0);
+  mb.addIreg(0x0064, 0);
+  mb.addIreg(0x0065, 0);
+  mb.addIreg(0x0066, 0);
+  mb.addIreg(0x0067, 0);
+  
+  // WirenBoard регистры
+
+  mb.addIreg(0x0068, deviceData->secondsWorkh);
+  mb.addIreg(0x0069, deviceData->secondsWorkl);
+  mb.addIreg(0x006a, 0);
+  mb.addIreg(0x006b, 0);
+  mb.addIreg(0x006c, 0);
+  mb.addIreg(0x006d, 0);
+  mb.addIreg(0x006e, 0);
+  mb.addIreg(0x006f, 0);
+  mb.addIreg(0x0070, 0);
+  mb.addIreg(0x0071, 0);
+  mb.addIreg(0x0072, 0);
+  mb.addIreg(0x0073, 0);
+  mb.addIreg(0x0074, 0);
+  mb.addIreg(0x0075, 0);
+  mb.addIreg(0x0076, 0);
+  mb.addIreg(0x0077, 0);
+  mb.addIreg(0x0078, 0);
+  mb.addIreg(0x0079, deviceData->vcc);
+  mb.addIreg(0x007c, deviceData->uptime);
+  mb.addIreg(0x007d, 0);
+  mb.addIreg(0x007e, 0);
+  mb.addIreg(0x007f, 0);
+  mb.addIreg(0x0080, 0);
+
+// holding регистры
 
   mb.addHreg(0x0047, deviceData->holdingData.powerMeterAddress);
   mb.addHreg(0x0048, deviceData->holdingData.pollingSettings.pollingPeriod);
@@ -258,40 +326,11 @@ void powerMeterSetup(DeviceData *deviceData)
   mb.addHreg(0x004b, deviceData->holdingData.pollingSettings.minutesPollingADay);
 
   // WirenBoard регистры
-
-  mb.addIreg(0x0068, deviceData->secondsWorkh);
-  mb.addIreg(0x0069, deviceData->secondsWorkl);
-
+  
   mb.addHreg(0x006e, deviceData->holdingData.baudRate);
   mb.addHreg(0x006f, deviceData->holdingData.parity);
   mb.addHreg(0x0070, holdingData.stopBits);
-
-  mb.addIreg(0x0079, deviceData->vcc);
-  mb.addIreg(0x007c, deviceData->uptime);
   mb.addHreg(0x0080, deviceData->holdingData.modbusAddr);
-
-  mb.addIreg(0x0090, deviceData->dateTime0);
-  mb.addIreg(0x0091, deviceData->dateTime1);
-  mb.addIreg(0x0092, deviceData->dateTime2);
-  mb.addIreg(0x0093, deviceData->dateTime3);
-  mb.addIreg(0x0094, deviceData->dateTime4);
-  mb.addIreg(0x0095, deviceData->dateTime5);
-  mb.addIreg(0x0096, deviceData->dateTime6);
-  mb.addIreg(0x0097, deviceData->dateTime7);
-  mb.addIreg(0x0098, deviceData->dateTime8);
-  mb.addIreg(0x0099, deviceData->dateTime9);
-  mb.addIreg(0x009a, deviceData->dateTime10);
-  mb.addIreg(0x009b, deviceData->dateTime11);
-  mb.addIreg(0x009c, deviceData->dateTime12);
-  mb.addIreg(0x009d, deviceData->dateTime13);
-  mb.addIreg(0x009e, deviceData->dateTime14);
-  mb.addIreg(0x009f, deviceData->dateTime15);
-  mb.addIreg(0x00a0, deviceData->dateTime16);
-  mb.addIreg(0x00a1, deviceData->dateTime17);
-  mb.addIreg(0x00a2, deviceData->dateTime18);
-  
-  mb.addIreg(0x00a3, deviceData->secondsUntilIterationh);
-  mb.addIreg(0x00a4, deviceData->secondsUntilIterationl);
 
   checkPowerMeterAddress(deviceData);
 }
@@ -304,8 +343,6 @@ void powerMeterLoop(DeviceData *deviceData)
   uint32_t secondsWork = uint32_t(millis() / 1000ul);
   deviceData->secondsWorkh = uint16_t((secondsWork & 0xffff0000) >> 16);
   deviceData->secondsWorkl = uint16_t(secondsWork & 0x0000ffff);
-
-  //  deviceData->vcc = analogRead_VCC() * 1000;
 
   mb.Ireg(0x0020, deviceData->u1);
   mb.Ireg(0x0021, deviceData->i1h);
@@ -332,47 +369,47 @@ void powerMeterLoop(DeviceData *deviceData)
   mb.Ireg(0x0035, deviceData->serialNumber11);
   mb.Ireg(0x0036, deviceData->serialNumber12);
 
-  mb.Ireg(0x0090, deviceData->dateTime0);
-  mb.Ireg(0x0091, deviceData->dateTime1);
-  mb.Ireg(0x0092, deviceData->dateTime2);
-  mb.Ireg(0x0093, deviceData->dateTime3);
-  mb.Ireg(0x0094, deviceData->dateTime4);
-  mb.Ireg(0x0095, deviceData->dateTime5);
-  mb.Ireg(0x0096, deviceData->dateTime6);
-  mb.Ireg(0x0097, deviceData->dateTime7);
-  mb.Ireg(0x0098, deviceData->dateTime8);
-  mb.Ireg(0x0099, deviceData->dateTime9);
-  mb.Ireg(0x009a, deviceData->dateTime10);
-  mb.Ireg(0x009b, deviceData->dateTime11);
-  mb.Ireg(0x009c, deviceData->dateTime12);
-  mb.Ireg(0x009d, deviceData->dateTime13);
-  mb.Ireg(0x009e, deviceData->dateTime14);
-  mb.Ireg(0x009f, deviceData->dateTime15);
-  mb.Ireg(0x00a0, deviceData->dateTime16);
-  mb.Ireg(0x00a1, deviceData->dateTime17);
-  mb.Ireg(0x00a2, deviceData->dateTime18);
+  mb.Ireg(0x004c, deviceData->dateTime0);
+  mb.Ireg(0x004d, deviceData->dateTime1);
+  mb.Ireg(0x004e, deviceData->dateTime2);
+  mb.Ireg(0x004f, deviceData->dateTime3);
+  mb.Ireg(0x0050, deviceData->dateTime4);
+  mb.Ireg(0x0051, deviceData->dateTime5);
+  mb.Ireg(0x0052, deviceData->dateTime6);
+  mb.Ireg(0x0053, deviceData->dateTime7);
+  mb.Ireg(0x0054, deviceData->dateTime8);
+  mb.Ireg(0x0055, deviceData->dateTime9);
+  mb.Ireg(0x0056, deviceData->dateTime10);
+  mb.Ireg(0x0057, deviceData->dateTime11);
+  mb.Ireg(0x0058, deviceData->dateTime12);
+  mb.Ireg(0x0059, deviceData->dateTime13);
+  mb.Ireg(0x005a, deviceData->dateTime14);
+  mb.Ireg(0x005b, deviceData->dateTime15);
+  mb.Ireg(0x005c, deviceData->dateTime16);
+  mb.Ireg(0x005d, deviceData->dateTime17);
+  mb.Ireg(0x005e, deviceData->dateTime18);
 
-  mb.Ireg(0x00a3, deviceData->secondsUntilIterationh);
-  mb.Ireg(0x00a4, deviceData->secondsUntilIterationl);
+  mb.Ireg(0x0060, deviceData->secondsUntilIterationh);
+  mb.Ireg(0x0061, deviceData->secondsUntilIterationl);
 
-  mb.Ireg(0x0037, deviceData->year);
-  mb.Ireg(0x0038, deviceData->month);
-  mb.Ireg(0x0039, deviceData->day);
-  mb.Ireg(0x003a, deviceData->hours);
-  mb.Ireg(0x003b, deviceData->minutes);
-  mb.Ireg(0x003c, deviceData->seconds);
+  mb.Ireg(0x0038, deviceData->year);
+  mb.Ireg(0x0039, deviceData->month);
+  mb.Ireg(0x003a, deviceData->day);
+  mb.Ireg(0x003b, deviceData->hours);
+  mb.Ireg(0x003c, deviceData->minutes);
+  mb.Ireg(0x003d, deviceData->seconds);
 
-  mb.Ireg(0x003d, deviceData->energyh);
-  mb.Ireg(0x003e, deviceData->energyl);
-  mb.Ireg(0x003f, deviceData->energyT1h);
-  mb.Ireg(0x0040, deviceData->energyT1l);
-  mb.Ireg(0x0041, deviceData->energyT2h);
-  mb.Ireg(0x0042, deviceData->energyT2l);
-  mb.Ireg(0x0043, deviceData->energyT3h);
-  mb.Ireg(0x0044, deviceData->energyT3l);
+  mb.Ireg(0x003e, deviceData->energyh);
+  mb.Ireg(0x003f, deviceData->energyl);
+  mb.Ireg(0x0040, deviceData->energyT1h);
+  mb.Ireg(0x0041, deviceData->energyT1l);
+  mb.Ireg(0x0042, deviceData->energyT2h);
+  mb.Ireg(0x0043, deviceData->energyT2l);
+  mb.Ireg(0x0044, deviceData->energyT3h);
+  mb.Ireg(0x0045, deviceData->energyT3l);
 
-  mb.Ireg(0x0045, deviceData->c);
-  mb.Ireg(0x0046, deviceData->Error);
+  mb.Ireg(0x0046, deviceData->c);
+  mb.Ireg(0x0047, deviceData->Error);
 
   deviceData->holdingData.powerMeterAddress                   = mb.Hreg(0x0047);
   deviceData->holdingData.pollingSettings.pollingPeriod       = mb.Hreg(0x0048);
